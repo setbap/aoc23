@@ -1,13 +1,39 @@
-pub fn q1() {
-    println!("fake template for q1");
+use regex::Regex;
+use std::fs;
+
+pub fn q1(run_with_test_data: bool) -> String {
+    let path = if run_with_test_data {
+        "src/days/day01/q1_input_question.txt"
+    } else {
+        "src/days/day01/q1_input_example.txt"
+    };
+    let data = fs::read_to_string(path)
+        .unwrap()
+        .lines()
+        .map(|input| {
+            let extracted_number = number_extractor(input);
+            seprate_first_and_last(extracted_number.as_str())
+        })
+        .sum::<i32>();
+
+    data.to_string()
 }
 
 fn number_extractor(input: &str) -> String {
-    unimplemented!()
+    let re = Regex::new(r"\d+").unwrap();
+    re.find_iter(input).map(|mat| mat.as_str()).collect()
 }
 
 fn seprate_first_and_last(input: &str) -> i32 {
-    unimplemented!()
+    match input.len() {
+        1 => input.parse::<i32>().unwrap() * 11,
+        2 => input.parse().unwrap(),
+        _ => {
+            let right_digit = input.chars().rev().next().unwrap().to_digit(10).unwrap() as i32;
+            let left_digit = input.chars().next().unwrap().to_digit(10).unwrap() as i32;
+            (left_digit * 10) + right_digit
+        }
+    }
 }
 
 #[cfg(test)]
@@ -21,7 +47,7 @@ mod q1_test {
         assert_eq!(q1::number_extractor("993"), "993");
         assert_eq!(q1::number_extractor("aaaaaa9aaaaaaaa9aaaaaaaaa9"), "999");
         assert_eq!(q1::number_extractor("aaaaaa9aaaaaaaa9aaaaaaaaa9"), "999");
-        assert_eq!(q1::number_extractor("a0000a0"), "0000");
+        assert_eq!(q1::number_extractor("a0000a0"), "00000");
     }
 
     #[test]

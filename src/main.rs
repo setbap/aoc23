@@ -1,3 +1,6 @@
+use aoc23::days::day01;
+
 fn main() {
-    println!("Hello, world!");
+    let x = day01::q1::q1(false);
+    println!("{x}");
 }
