@@ -1,14 +1,9 @@
 use regex::Regex;
-use std::fs;
+
+use crate::read_file_string;
 
 pub fn q1(run_with_test_data: bool) -> String {
-    let path = if run_with_test_data {
-        "src/days/day01/q1_input_question.txt"
-    } else {
-        "src/days/day01/q1_input_example.txt"
-    };
-    let data = fs::read_to_string(path)
-        .unwrap()
+    let data = read_file_string(run_with_test_data, 1, 1)
         .lines()
         .map(|input| {
             let extracted_number = number_extractor(input);
