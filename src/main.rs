@@ -1,6 +1,9 @@
-use aoc23::days::day01;
+use aoc23::days::{day01, day02};
 
 fn main() {
-    let x = day01::q1::q1(true);
-    println!("{x}");
+    println!("day02, part2, answer : {}", day02::q2::q2(false));
+    println!("---------***--------");
+    println!("day02, part1, answer : {}", day02::q1::q1(false));
+    println!("---------***--------");
+    println!("day01, part1, answer : {}", day01::q1::q1(false));
 }
